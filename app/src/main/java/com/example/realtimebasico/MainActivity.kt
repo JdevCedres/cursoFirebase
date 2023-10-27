@@ -3,6 +3,8 @@ package com.example.realtimebasico
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.realtimebasico.data.FirebaseInstance
 import com.example.realtimebasico.data.Todo
@@ -28,16 +30,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUI() {
-        binding.btnUpdate.setOnClickListener {
-            firebaseInstance.writeOnFirebase()
+
+        todoAdapter = TodoAdapter{ reference ->
+            firebaseInstance.removeFromDatabase(reference)
         }
-        todoAdapter = TodoAdapter()
         binding.rvTasks.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = todoAdapter
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.my_menu,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.btnAddTask -> {
+                firebaseInstance.writeOnFirebase()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun setupListeners() {
         val postListener = object : ValueEventListener {

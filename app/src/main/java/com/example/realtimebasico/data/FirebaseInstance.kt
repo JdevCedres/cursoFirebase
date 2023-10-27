@@ -28,4 +28,7 @@ class FirebaseInstance(context:Context) {
         database.reference.addValueEventListener(postListener)
     }
     private fun getGenericTasksItem(randomValue:String)= Todo(title = "tarea $randomValue", description = "Esto es una descripción cremita")
+    fun removeFromDatabase(reference: String) {
+        myRef.child(reference).removeValue()
+    }
 }

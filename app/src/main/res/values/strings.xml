@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RealTimeBasico</string>
+    <string name="item_menu_add_task">Add Todo</string>
 </resources>
